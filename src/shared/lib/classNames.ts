@@ -1,26 +1,25 @@
-type TClassNamesArgs = string | Record<string, unknown> | string[]
+type TClassNamesArgs = string | Record<string, unknown> | string[];
 
 function classNames(...args: TClassNamesArgs[]): string {
-    const classes: string[] = []
+    const classes: string[] = [];
 
-    args.forEach(arg => {
+    args.forEach((arg) => {
         if (typeof arg === 'string') {
-            classes.push(arg)
+            classes.push(arg);
         }
         if (Array.isArray(arg) && arg.length) {
-            classes.push(...arg)
+            classes.push(...arg);
         }
         if (typeof arg === 'object' && !Array.isArray(arg)) {
             Object.entries(arg).forEach(([key, value]) => {
-                if (Boolean(value)) {
-                    classes.push(key)
+                if (value) {
+                    classes.push(key);
                 }
-            })
+            });
         }
-    })
+    });
 
-    return classes.join(' ')
+    return classes.join(' ');
 }
 
-export default classNames
-
+export default classNames;

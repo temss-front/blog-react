@@ -1,18 +1,17 @@
-import {createRoot} from "react-dom/client";
+import { createRoot } from 'react-dom/client';
 
-import {App} from "./app/App";
-import {BrowserRouter} from "react-router-dom";
-import {ThemeProvider} from "@/app/providers/theme-provider";
+import { BrowserRouter } from 'react-router-dom';
+import { App } from './app/App';
+import { ThemeProvider } from '@/app/providers/theme-provider';
 
-import "@/shared/config/i18n";
+import '@/shared/config/i18n';
 
-
-const root = createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'));
 
 root.render(
     <BrowserRouter>
         <ThemeProvider>
-            <App/>
+            <App />
         </ThemeProvider>
-    </BrowserRouter>
-)
+    </BrowserRouter>,
+);

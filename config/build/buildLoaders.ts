@@ -1,10 +1,9 @@
-import webpack from "webpack";
-import {BuildOptions} from "./types/config";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import webpack from 'webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshTypeScript from 'react-refresh-typescript';
+import { BuildOptions } from './types/config';
 
-export function buildLoaders({isDevelopment}: BuildOptions): webpack.RuleSetRule[] {
-
+export function buildLoaders({ isDevelopment }: BuildOptions): webpack.RuleSetRule[] {
     const typescriptLoader = {
         test: /\.[jt]sx?$/,
         use: [
@@ -16,36 +15,26 @@ export function buildLoaders({isDevelopment}: BuildOptions): webpack.RuleSetRule
                     }),
                     transpileOnly: isDevelopment,
                 },
-            }
+            },
         ],
         exclude: /node_modules/,
-    }
+    };
 
     const babelLoader = {
         test: /\.(js|jsx|tsx)$/,
         exclude: /node_modules/,
         use: {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
                 presets: ['@babel/preset-env'],
-                plugins: [
-                    [
-                        'i18next-extract',
-                        {
-                            locales: ['ru', 'en'],
-                            keyAsDefaultValue: true,
-                            outputPath: 'public/locales/{{locale}}/translation.json',
-                        }
-                    ]
-                ]
-            }
-        }
-    }
+            },
+        },
+    };
 
     const svgLoader = {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
-    }
+    };
 
     const fileLoader = {
         test: /\.(png|jpe?g|gif|woff2|woff)$/i,
@@ -54,36 +43,36 @@ export function buildLoaders({isDevelopment}: BuildOptions): webpack.RuleSetRule
                 loader: 'file-loader',
             },
         ],
-    }
+    };
 
     const styleLoader = {
         test: /\.s[ac]ss$/i,
         use: [
-            isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+            isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
             // Translates CSS into CommonJS
             {
-                loader: "css-loader",
+                loader: 'css-loader',
                 options: {
                     modules: {
                         auto: /\w+\.module\.s[ac]ss/,
                         localIdentName: isDevelopment
                             ? '[name]__[local]--[hash:base64:5]'
-                            : '[hash:base64:8]'
+                            : '[hash:base64:8]',
                     },
 
-                }
+                },
 
             },
             // Compiles Sass to CSS
-            "sass-loader",
+            'sass-loader',
         ],
-    }
+    };
 
     return [
         fileLoader,
         svgLoader,
         babelLoader,
         typescriptLoader,
-        styleLoader
-    ]
+        styleLoader,
+    ];
 }

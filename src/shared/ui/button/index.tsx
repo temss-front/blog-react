@@ -1,12 +1,12 @@
-import React from "react";
-import cn from "@/shared/lib/classNames";
+import React from 'react';
+import cn from '@/shared/lib/classNames';
 
-import styles from './button.module.scss'
+import styles from './button.module.scss';
 
 export enum BUTTON_VIEW {
     GHOST = 'ghost',
     PRIMARY = 'primary',
-    SECONDARY = 'secondary'
+    SECONDARY = 'secondary',
 }
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -15,11 +15,12 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     view?: BUTTON_VIEW
 }
 
-export const Button = ({className, onClick, children, view, ...props}: Props) => {
+export function Button({
+    className, onClick, children, view, ...props
+}: Props) {
     return (
-        <button onClick={onClick} className={cn(styles.button, styles[view], className)} {...props}>
+        <button type="button" onClick={onClick} className={cn(styles.button, styles[view], className)} {...props}>
             {children}
         </button>
     );
-};
-
+}
