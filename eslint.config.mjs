@@ -1,4 +1,3 @@
-import path from 'path';
 import url from 'node:url';
 import globals from 'globals';
 import pluginJs from '@eslint/js';
