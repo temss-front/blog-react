@@ -1,9 +1,9 @@
 import path from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 import globals from 'globals';
 import pluginJs from '@eslint/js';
-import {fixupConfigRules} from '@eslint/compat';
-import {FlatCompat} from '@eslint/eslintrc';
+import { fixupConfigRules } from '@eslint/compat';
+import { FlatCompat } from '@eslint/eslintrc';
 import tsParser from '@typescript-eslint/parser';
 import tseslint from 'typescript-eslint';
 
@@ -11,14 +11,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const flatCompat = new FlatCompat({
-        baseDirectory: __dirname,
-        resolvePluginsRelativeTo: __dirname,
-    },
-);
+    baseDirectory: __dirname,
+    resolvePluginsRelativeTo: __dirname,
+});
 
 export default tseslint.config(
     {
-        ignores: ['dist', 'node_modules', 'jest.config.ts', 'eslint.config.mjs'],
+        ignores: ['dist', 'node_modules', 'config', 'eslint.config.mjs'],
     },
 
     pluginJs.configs.recommended,
@@ -27,7 +26,6 @@ export default tseslint.config(
     ...fixupConfigRules(flatCompat.extends('airbnb-typescript')),
     ...fixupConfigRules(flatCompat.extends('plugin:i18next/recommended')),
     ...fixupConfigRules(flatCompat.plugins('i18next')),
-    ...fixupConfigRules(flatCompat.config({})),
     {
         languageOptions: {
             ecmaVersion: 'latest',
@@ -38,7 +36,7 @@ export default tseslint.config(
                 project: true,
                 tsconfigRootDir: import.meta.dirname,
             },
-            globals: {...globals.browser, __IS_DEV__: true},
+            globals: { ...globals.browser, __IS_DEV__: true },
         },
         rules: {
             'import/no-unresolved': 'off',
@@ -57,11 +55,13 @@ export default tseslint.config(
 
             'react/jsx-indent-props': ['warn', 4],
 
+            'react/jsx-props-no-spreading': 'off',
+
             '@typescript-eslint/indent': ['warn', 4],
 
             'no-unused-vars': 'warn',
 
-            'react/jsx-props-no-spreading': 'warn',
+            'max-len': ['warn', { code: 100, ignoreComments: true }],
 
             'import/no-extraneous-dependencies': 'off',
 
@@ -72,7 +72,7 @@ export default tseslint.config(
 
             'no-underscore-dangle': 'off',
 
-            'i18next/no-literal-string': ['warn', {markupOnly: true}],
+            'i18next/no-literal-string': ['warn', { markupOnly: true }],
         },
-    }
-)
+    },
+);

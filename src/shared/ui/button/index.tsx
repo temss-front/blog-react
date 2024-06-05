@@ -19,7 +19,12 @@ export function Button({
     className, onClick, children, view, ...props
 }: Props) {
     return (
-        <button type="button" onClick={onClick} className={cn(styles.button, styles[view], className)} {...props}>
+        <button
+            type="button"
+            onClick={onClick}
+            className={cn(styles.button, styles[view], className)}
+            {...props}
+        >
             {children}
         </button>
     );
