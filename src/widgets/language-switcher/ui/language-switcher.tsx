@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import classNames from '@/shared/lib/classNames';
 
-import styles from './language-switcher.module.scss';
 import { Button, BUTTON_VIEW } from '@/shared/ui/button';
 
 interface Props {
@@ -17,7 +16,7 @@ export function LanguageSwitcher({ className }: Props) {
 
     return (
         <Button
-            className={classNames(styles.languageSwitcher, className)}
+            className={classNames(className)}
             view={BUTTON_VIEW.GHOST}
             onClick={toggleLanguage}
         >

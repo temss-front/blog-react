@@ -1,18 +1,33 @@
-import url from 'node:url';
+import path from 'path';
+import {fileURLToPath} from 'url';
 import globals from 'globals';
 import pluginJs from '@eslint/js';
-import { fixupConfigRules } from '@eslint/compat';
-import { FlatCompat } from '@eslint/eslintrc';
+import {fixupConfigRules} from '@eslint/compat';
+import {FlatCompat} from '@eslint/eslintrc';
 import tsParser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const flatCompat = new FlatCompat(
-    { baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended },
+const flatCompat = new FlatCompat({
+        baseDirectory: __dirname,
+        resolvePluginsRelativeTo: __dirname,
+    },
 );
 
-export default [
-    ...fixupConfigRules(flatCompat.extends('airbnb', 'airbnb/hooks', 'airbnb-typescript')),
+export default tseslint.config(
+    {
+        ignores: ['dist', 'node_modules', 'jest.config.ts', 'eslint.config.mjs'],
+    },
+
+    pluginJs.configs.recommended,
+    ...fixupConfigRules(flatCompat.extends('airbnb')),
+    ...fixupConfigRules(flatCompat.extends('airbnb/hooks')),
+    ...fixupConfigRules(flatCompat.extends('airbnb-typescript')),
+    ...fixupConfigRules(flatCompat.extends('plugin:i18next/recommended')),
+    ...fixupConfigRules(flatCompat.plugins('i18next')),
+    ...fixupConfigRules(flatCompat.config({})),
     {
         languageOptions: {
             ecmaVersion: 'latest',
@@ -20,31 +35,44 @@ export default [
             parserOptions: {
                 allowJs: true,
                 sourceType: 'module',
-                project: ['./tsconfig.json'],
+                project: true,
+                tsconfigRootDir: import.meta.dirname,
             },
             globals: {...globals.browser, __IS_DEV__: true},
         },
-    },
-    {
-        ignores: ['./eslint.config.mjs'],
         rules: {
             'import/no-unresolved': 'off',
-            indent: ['warn', 4],
+
+            'indent': ['warn', 4],
+
             'react/require-default-props': 'off',
+
             'import/extensions': 'off',
+
             'import/prefer-default-export': 'off',
+
             'react/react-in-jsx-scope': 'off',
+
             'react/jsx-indent': ['warn', 4],
+
             'react/jsx-indent-props': ['warn', 4],
+
             '@typescript-eslint/indent': ['warn', 4],
+
             'no-unused-vars': 'warn',
+
             'react/jsx-props-no-spreading': 'warn',
+
             'import/no-extraneous-dependencies': 'off',
+
             '@typescript-eslint/naming-convention': ['warn', {
                 selector: 'enum',
                 format: ['UPPER_CASE'],
             }],
+
             'no-underscore-dangle': 'off',
+
+            'i18next/no-literal-string': ['warn', {markupOnly: true}],
         },
-    },
-];
+    }
+)
