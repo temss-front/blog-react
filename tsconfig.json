@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "dist"],
+  "types": ["@testing-library/jest-dom"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

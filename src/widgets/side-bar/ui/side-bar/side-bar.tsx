@@ -12,8 +12,11 @@ export function SideBar({ className }: Props) {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
-        <div className={classNames(styles.sideBar, { [styles.collapsed]: collapsed }, className)}>
-            <button type="button" onClick={() => setCollapsed((prev) => !prev)}>Toggle</button>
+        <div
+            data-testid="side-bar"
+            className={classNames(styles.sideBar, { [styles.collapsed]: collapsed }, className)}
+        >
+            <button data-testid="side-bar-toggle" type="button" onClick={() => setCollapsed((prev) => !prev)}>Toggle</button>
             <div className={styles.switchers}>
                 <LanguageSwitcher className={classNames(
                     styles.languageSwitcher,
