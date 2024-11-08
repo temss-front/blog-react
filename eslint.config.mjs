@@ -18,16 +18,7 @@ const flatCompat = new FlatCompat({
 export default tseslint.config(
     {
         ignores: ['dist', 'node_modules', 'config', 'eslint.config.mjs'],
-        overrides: [
-            {
-                files: ['**/src/**/*.test.{ts,tsx}'],
-                rules: {
-                    'i18next/no-literal-string': 'off',
-                },
-            }
-        ]
     },
-
     pluginJs.configs.recommended,
     ...fixupConfigRules(flatCompat.extends('airbnb')),
     ...fixupConfigRules(flatCompat.extends('airbnb/hooks')),
@@ -80,7 +71,13 @@ export default tseslint.config(
 
             'no-underscore-dangle': 'off',
 
-            'i18next/no-literal-string': ['warn', { markupOnly: true, ignoreAttribute: ['data-testid'] }],
+            'i18next/no-literal-string': ['warn', { markupOnly: true, ignoreAttribute: ['data-testid', 'to'] }],
         },
+    },
+    {
+        files: ['**/src/**/*.test.{ts,tsx}'],
+        rules: {
+            'i18next/no-literal-string': 'off',
+        }
     },
 );
